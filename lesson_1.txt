@@ -1,0 +1,19 @@
+Устанавливаемые модули
+nodemon
+express
+
+Принципы построения архитектуры API
+localhost:3000/api/ - первая точка входа
+
+localhost:3000/api/v1/
+                  /v2/command/subcommand/subcommand/
+
+GET, PUT, PUSH, POST, DEL, PATCH, UPDATE
+
+
+GET     localhost:3000/api/v1/product/:id/
+DEL     localhost:3000/api/v1/product/:id/
+PATCH   localhost:3000/api/v1/product/:id/
+POST    localhost:3000/api/v1/product/ {}
+PUSH    loclahost:3000/api/v1/product/ {}
+
