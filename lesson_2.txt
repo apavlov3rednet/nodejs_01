@@ -1,12 +1,14 @@
 Модули
   основные:
-    fs
-    express
+    node:fs
+    npm i express
 
   дев:
-    nodemon
-    swagger-jsdoc 
-    swagger-ui-express
+    npm i nodemon
+    npm i swagger-jsdoc 
+    npm i swagger-ui-express
+
+    npm i express nodemon swagger-jsdoc swagger-ui-express
 
 ------------------
 // In src/index.js
