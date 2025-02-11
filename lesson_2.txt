@@ -1,0 +1,108 @@
+Модули
+  основные:
+    fs
+    express
+
+  дев:
+    nodemon
+    swagger-jsdoc 
+    swagger-ui-express
+
+------------------
+// In src/index.js
+const express = require('express');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// For testing purposes
+app.get('/', (req, res) => {
+    res.send("<h2>Это работает</h2>");
+});
+
+app.listen(PORT, () => {
+    console.log(`API is listening on port ${PORT}`);
+});
+
+//package.json
+{
+    "name": "dataapi",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon src/index.js" //npm run dev
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    },
+    "dependencies": {
+        "express": "^4.17.3"
+    }
+}
+------------
+
+// In src/v1/routes/index.js
+const express = require('express');
+const router = express.Router();
+
+router.route('/').get((req, res) => {
+    res.send(`<h2>Hello from ${req.baseUrl}</h2>`);
+});
+
+module.exports = router;
+
+// In src/index.js
+const express = require('express');
+// *** ADD ***
+const v1Router = require('./v1/routes');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// *** REMOVE ***
+app.get('/', (req, res) => {
+    res.send("<h2>It's Working!</h2>");
+});
+
+// *** ADD ***
+app.use('/api/v1', v1Router);
+
+app.listen(PORT, () => {
+    console.log(`API is listening on port ${PORT}`);
+});
+-------------
+
+Маршрутизация
+src/controllers/dataController.js
+src/services/dataService.js
+src/v1/routes/dataRoutes.js
+
+// In src/v1/routes/dataRoutes.js
+const express = require('express');
+const router = express.Router();
+
+router.get('/', (req, res) => {
+    res.send('Get all data');
+});
+
+router.get('/:dataId', (req, res) => {
+    res.send('Get an existing data');
+});
+
+router.post('/', (req, res) => {
+    res.send('Create a new data');
+});
+
+router.patch('/:dataId', (req, res) => {
+    res.send('Update an existing data');
+});
+
+router.delete('/:dataId', (req, res) => {
+    res.send('Delete an existing data');
+});
+
+module.exports = router;
