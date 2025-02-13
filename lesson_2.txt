@@ -79,6 +79,16 @@ app.listen(PORT, () => {
 -------------
 
 Маршрутизация
+src/controllers/:objectController - общие контроллеры
+src/services/:objectService       - сервис или инструментарий для упрощения работы
+src/v1/:object/:method/           - методы сущностей на данную версию
+
+10000000000000000
+Normalize.LocalNumber(number, ' ', '.', n);
+Normalize.LocalNumber(number, ' ', '.', 0);
+10 000 000 000 000 000.00
+10 000 000 000 000 000
+
 src/controllers/dataController.js
 src/services/dataService.js
 src/v1/routes/dataRoutes.js
