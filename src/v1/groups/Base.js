@@ -23,8 +23,8 @@ export class Base {
          * 3. Записать в него настройки 
          * 4. Закрыть файл
          */
-        let el = new Storage(this.name, 'write', this.rules);
-        el.save();
+        let el = new Storage('users');
+        el.createFile(this.name, this.rules);
     }
 
     getGroup() {
