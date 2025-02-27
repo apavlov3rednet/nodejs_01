@@ -65,6 +65,24 @@ export class Storage {
         });
   }
 
+  getAllFiles() {
+    //Читаем содержимое директории
+    fs.readdir(this.#dir, 'utf8', (err, data) => {
+      if(!err && data) {
+        let arrFiles = [];
+        data.forEach(item => {
+          let content = this.readFile(item);
+          arrFiles.push(content);
+        });
+        return arrFiles;
+      }
+      else {
+        //error
+        return false;
+      }
+    });
+  }
+
   updateFile(fileName, content) {
     const filePath = this.#dir + fileName + '.json';
     //1. Найти есть ли такой файл
