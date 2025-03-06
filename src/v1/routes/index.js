@@ -1,6 +1,12 @@
-import { Router } from 'express';
-import Users from './userRoutes';
+// In src/index.js
+const express = require('express');
+const v1UserRouter = require('./userRoutes.js');
 
-app.get('/user', Users);
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-export default router;
+app.use('/users', v1UserRouter);
+
+app.listen(PORT, () => {
+    console.log(`API is listening on port ${PORT}`);
+});

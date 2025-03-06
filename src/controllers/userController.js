@@ -1,4 +1,4 @@
-import { Storage } from "../services/storage";
+const Storage = require('./../services/storage.js');
 
 const getAllUsers = (req,res) => {
     let arr = new Storage('user');

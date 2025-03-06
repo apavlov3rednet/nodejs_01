@@ -1,4 +1,4 @@
-export class CustomArray {
+class CustomArray {
   static array_merge(array1, array2) {
     return [...new Set([...array1, ...array2])];
   }
@@ -9,3 +9,5 @@ export class CustomArray {
     return [...difference1, ...difference2];
   }
 }
+
+module.exports = CustomArray;

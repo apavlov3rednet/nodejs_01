@@ -1,7 +1,8 @@
-import fs from "node:fs";
-import { CustomArray } from "./array";
+const fs = require('fs');
+const path = require('path');
+const CustomArray = require('./array.js');
 
-export class Storage {
+class Storage {
   //private, protected, public
 
   #name = "";
@@ -11,6 +12,11 @@ export class Storage {
 
   constructor(dir) {
     if (dir != "") this.#dir = this.#dir + dir + "/"; // src/storage/users/
+  }
+
+  prepareFilePath(fileName) {
+    //process.cwd() - получить директорию проекта
+    const filePath = process.cwd() + this.#dir + fileName + '.json';
   }
 
   writeToFile(nameFile, jsonContent) {
@@ -67,20 +73,33 @@ export class Storage {
 
   getAllFiles() {
     //Читаем содержимое директории
-    fs.readdir(this.#dir, 'utf8', (err, data) => {
-      if(!err && data) {
-        let arrFiles = [];
-        data.forEach(item => {
-          let content = this.readFile(item);
-          arrFiles.push(content);
+    const directoryPath = process.cwd() + this.#dir;
+    let dataResult;
+
+    fs.readdir(directoryPath, (err, files) => {
+      if (err) {
+          return console.error('Не удалось прочитать директорию:', err);
+      }
+
+      // Перебор каждого файла в директории
+      files.forEach((file) => {
+        const filePath = path.join(directoryPath, file);
+
+        // Чтение содержимого файла
+        fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return console.error(`Не удалось прочитать файл ${file}:`, err);
+        }
+
+        dataResult = data;
+
+        console.log(`Содержимое файла ${file}:`);
+        console.log(data);
         });
-        return arrFiles;
-      }
-      else {
-        //error
-        return false;
-      }
+      });
     });
+
+    return dataResult;
   }
 
   updateFile(fileName, content) {
@@ -105,3 +124,6 @@ export class Storage {
     return true;
   }
 }
+
+
+module.exports = Storage;
