@@ -10,8 +10,8 @@ router.route('/').get((req, res) => {
 });
 
 //Получение одного пользователя по айди
-router.route('/:id').get((req, res) => {
-    let result = userController.getOneUser(req, res);
+router.route('/:id').get(async (req, res) => {
+    let result = await userController.getOneUser(req, res);
     res.send(result);
 });
 

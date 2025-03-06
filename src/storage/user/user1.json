@@ -1,0 +1,6 @@
+{
+    "login" : "user1",
+    "password": "123456",
+    "email": "user1@info.ru",
+    "group": [ "user" ]
+}

@@ -6,16 +6,23 @@ const getAllUsers = (req,res) => {
     return arr.getAllFiles();
 };
 
-const getOneUser = (req,res) => {
+const getOneUser = async (req,res) => {
     let userName = req.params.id;
     let arr = new Storage('user');
-    let content = arr.readFile(userName);
+    let content = JSON.parse(await arr.readFile(userName));
+    let bIsAdmin = false;
 
-    if(content.group.filter(item => item === 'admin')) {
-        return 'You not access to admin group users';
+    content.group.filter(function(item) { 
+        if(item === 'admin') {
+            bIsAdmin = true;
+        }
+    });
+
+    if(bIsAdmin) {
+        return JSON.stringify({error: 'You not access to admin group users'});
     }
     
-    return content;
+    return JSON.stringify(content);
 }
 
 const setUser = (req,res) => { //request, response

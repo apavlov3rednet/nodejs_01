@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const CustomArray = require('./array.js');
 
@@ -16,7 +16,7 @@ class Storage {
 
   prepareFilePath(fileName) {
     //process.cwd() - получить директорию проекта
-    const filePath = process.cwd() + this.#dir + fileName + '.json';
+    return process.cwd() + this.#dir + fileName + '.json';
   }
 
   writeToFile(nameFile, jsonContent) {
@@ -55,26 +55,16 @@ class Storage {
     );
   }
 
-  readFile(fileName) {
-    fs.readFile(fileName, 'utf8', (err, data) => {
-            if (err) {
-                console.error('Ошибка при чтении JSON файла:', err);
-                return false;
-            } else {
-                try {
-                    return JSON.parse(data);
-                } catch (parseErr) {
-                    console.error('Ошибка при разборе JSON данных:', parseErr);
-                    return false;
-                }
-            }
-        });
+  async readFile(fileName) {
+    const filePath = this.prepareFilePath(fileName);
+    const data = await fs.readFile(filePath, 'utf8');
+    return data; 
   }
 
   getAllFiles() {
     //Читаем содержимое директории
     const directoryPath = process.cwd() + this.#dir;
-    let dataResult;
+    let dataResult = {};
 
     fs.readdir(directoryPath, (err, files) => {
       if (err) {
@@ -82,20 +72,10 @@ class Storage {
       }
 
       // Перебор каждого файла в директории
-      files.forEach((file) => {
+      files.forEach(async (file, index) => {
         const filePath = path.join(directoryPath, file);
 
-        // Чтение содержимого файла
-        fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            return console.error(`Не удалось прочитать файл ${file}:`, err);
-        }
-
-        dataResult = data;
-
-        console.log(`Содержимое файла ${file}:`);
-        console.log(data);
-        });
+        dataResult[index] = await this.readFile(filePath);
       });
     });
 
