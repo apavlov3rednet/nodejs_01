@@ -34,7 +34,7 @@ class Storage {
   createFile(fileName, content) {
     if (!fileName || !content) return false;
 
-    const nameFile = this.#dir + fileName + ".json";
+    const nameFile = this.prepareFilePath(fileName);
     const jsonContent = JSON.stringify(content);
     // a:{s: {}, d: {}} || a:{login: 'name', password: '}
     return this.writeToFile(nameFile, jsonContent);
@@ -83,7 +83,7 @@ class Storage {
   }
 
   updateFile(fileName, content) {
-    const filePath = this.#dir + fileName + '.json';
+    const filePath = this.prepareFilePath(fileName);
     //1. Найти есть ли такой файл
     if(this.findFile(filePath)) {
         //2. Считать содержимое файла

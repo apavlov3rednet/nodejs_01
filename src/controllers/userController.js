@@ -27,14 +27,14 @@ const getOneUser = async (req,res) => {
 
 const setUser = (req,res) => { //request, response
     let arr = new Storage('user');
-    let content = req.post.toArray();
-    if(req.params.id > 0) {
+    let content = req.body;
+    if(req.params.id) {
         arr.updateFile(req.params.id, content);
         return true;
     }
     else {
-        let nameFile = content.userName;
-        return arr.updateFile(nameFile, content);
+        let nameFile = content.login;
+        return arr.createFile(nameFile, content);
     }
 }
 

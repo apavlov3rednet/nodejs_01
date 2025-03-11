@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "public": "nodemon public/index.html"
   },
   "dependencies": {
     "express": "^4.21.2",
