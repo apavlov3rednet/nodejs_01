@@ -42,8 +42,10 @@ class Storage {
 
   //Ищем файл на сервере
   findFile(fileName) {
+    const nameFile = this.prepareFilePath(fileName);
+    console.log(nameFile)// todo: посмотреть что не так с этой функцией
     fs.access(
-        fileName, 
+      nameFile, 
         fs.constants.F_OK, 
         (err) => {
             if (err) {
@@ -82,12 +84,12 @@ class Storage {
     return dataResult;
   }
 
-  updateFile(fileName, content) {
+  async updateFile(fileName, content) {
     const filePath = this.prepareFilePath(fileName);
     //1. Найти есть ли такой файл
     if(this.findFile(filePath)) {
         //2. Считать содержимое файла
-        let oldContent = this.readFile(filePath); //array
+        let oldContent = await this.readFile(filePath); //array
         //3. Обновить содержимое файла с обновлением
         let newContent = CustomArray.array_merge(oldContent, content);
         return this.writeToFile(filePath, newContent);

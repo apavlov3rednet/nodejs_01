@@ -9,23 +9,25 @@ router.route('/').get((req, res) => {
     res.send(result); //json
 });
 
-//Получение одного пользователя по айди
-router.route('/:id').get(async (req, res) => {
-    let result = await userController.getOneUser(req, res);
-    res.send(result);
-});
-
+//Создает пользователя
 router.route('/').post((req, res) => {
     let result = userController.setUser(req, res);
     res.send(result);
 });
 
-router.route('/:id').patch((req, res) => {
+//Получение одного пользователя по айди
+router.route('/:id/').get(async (req, res) => {
+    let result = await userController.getOneUser(req, res);
+    res.send(result);
+});
+
+router.route('/:id/').patch((req, res) => {
+    console.log('test')
     let result = userController.setUser(req, res);
     res.send(result);
 });
 
-router.route('/:id').delete((req, res) => {
+router.route('/:id/').delete((req, res) => {
     res.send(`<h2>Hello from ${req.baseUrl}</h2>`);
 });
 

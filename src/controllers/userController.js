@@ -1,5 +1,9 @@
 const Storage = require('./../services/storage.js');
 
+function getVersion(url) {
+    return url.split('/')[2];
+}
+
 const getAllUsers = (req,res) => {
     let arr = new Storage('user');
     //Получить содержимое директории
@@ -7,35 +11,17 @@ const getAllUsers = (req,res) => {
 };
 
 const getOneUser = async (req,res) => {
-    let userName = req.params.id;
-    let arr = new Storage('user');
-    let content = JSON.parse(await arr.readFile(userName));
-    let bIsAdmin = false;
-
-    content.group.filter(function(item) { 
-        if(item === 'admin') {
-            bIsAdmin = true;
-        }
-    });
-
-    if(bIsAdmin) {
-        return JSON.stringify({error: 'You not access to admin group users'});
-    }
-    
-    return JSON.stringify(content);
+    const version = getVersion(req.baseUrl);
+    const userData = require('../' + version + '/users/Data.js');
+    let data = new userData();
+    return await data.getByLogin(req.params.id);
 }
 
-const setUser = (req,res) => { //request, response
-    let arr = new Storage('user');
-    let content = req.body;
-    if(req.params.id) {
-        arr.updateFile(req.params.id, content);
-        return true;
-    }
-    else {
-        let nameFile = content.login;
-        return arr.createFile(nameFile, content);
-    }
+const setUser = async (req,res) => { //request, response
+    const version = getVersion(req.baseUrl);
+    const userData = require('../' + version + '/users/Data.js');
+    let data = new userData();
+    return await data.setUser(req.body);
 }
 
 const deleteUser = (req,res) => {
