@@ -16,7 +16,7 @@ class Storage {
 
   prepareFilePath(fileName) {
     //process.cwd() - получить директорию проекта
-    return process.cwd() + this.#dir + fileName + '.json';
+    return path.join(process.cwd(), this.#dir, fileName + '.json');
   }
 
   writeToFile(nameFile, jsonContent) {
@@ -41,20 +41,10 @@ class Storage {
   }
 
   //Ищем файл на сервере
-  findFile(fileName) {
+  async findFile(fileName) {
     const nameFile = this.prepareFilePath(fileName);
-    console.log(nameFile)// todo: посмотреть что не так с этой функцией
-    fs.access(
-      nameFile, 
-        fs.constants.F_OK, 
-        (err) => {
-            if (err) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    );
+    const result = await fs.open(nameFile, "r");
+    return result;
   }
 
   async readFile(fileName) {
@@ -100,10 +90,9 @@ class Storage {
     }
   }
 
-  deleteFile(fileName) {
-    const filePath = this.#dir + fileName + '.json';
-    fs.unlink(filePath);
-    return true;
+  async deleteFile(fileName) {
+    const filePath = this.prepareFilePath(fileName);
+    return await fs.unlink(filePath);
   }
 }
 

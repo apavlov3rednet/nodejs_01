@@ -2,13 +2,12 @@ const Storage = require('../../services/storage.js');
 const Access = require('./Access.js');
 
 class Data {
-    static test() {
-        console.log('this version add');
+    constructor() {
+        this.userStorage = new Storage('user');
     }
 
     async getByLogin(login) {
-        let arr = new Storage('user');
-        let content = JSON.parse(await arr.readFile(login));
+        let content = JSON.parse(await this.userStorage.readFile(login));
         if(Access.checkAdminGroup(content.group)) {
             return JSON.stringify({error: 'You not access to admin group users'});
         }
@@ -16,12 +15,18 @@ class Data {
     }
 
     async setUser(userData) {
-        let arr = new Storage('user');
         let nameFile = userData.login;
+        if(!!await this.userStorage.findFile(nameFile)) {
+            return await this.userStorage.updateFile(nameFile, userData);
+        }
+        else {
+            return this.userStorage.createFile(nameFile, userData);
+        }
+    }
 
-        console.log('find', arr.findFile(nameFile));
-
-        return arr.createFile(nameFile, userData);
+    async dropUser(userData) {
+        let login = userData.login;
+        
     }
 }
 

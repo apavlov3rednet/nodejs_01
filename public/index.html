@@ -32,5 +32,26 @@
 
         <input type="submit" name="send">
     </form>
+    <hr>
+    <form action="http://localhost:3000/api/v1/users/">
+        <input type="login">
+
+        <button onclick="drop(this); return false;">Удалить</button>
+        <div id="delete-request"></div>
+    </form>
+
+    <script>
+        function drop(obButton) {
+            const form = obButton.form;
+            const url = form.getAttribute('action');
+            const login = form.querySelector('input').value;
+            const element = form.querySelector('#delete-request');
+
+            if(login != '') {
+                fetch(url + login + '/', { method: 'DELETE' })
+                    .then(() => element.innerHTML = 'Delete successful');
+            }
+        }
+    </script>
 </body>
 </html>
