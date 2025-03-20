@@ -1,14 +1,21 @@
 const Storage = require('../../services/storage.js');
-const Access = require('./Access.js');
+const Access = require('../Access.js');
 
+/**
+ * Класс работы с хранилищем пользователя
+ */
 class Data {
-    constructor() {
+    constructor(headers) {
         this.userStorage = new Storage('user');
+        this.clientLogin = headers.Auth || false;
+        this.clientSecret = headers.secret || false;
+        this.publicKey = headers.publickey || false;
+        this.access = new Access(this.clientLogin, this.clientSecret, this.publicKey);
     }
 
     async getByLogin(login) {
         let content = JSON.parse(await this.userStorage.readFile(login));
-        if(Access.checkAdminGroup(content.group)) {
+        if(this.access.checkAdminGroup(content.group)) {
             return JSON.stringify({error: 'You not access to admin group users'});
         }
         return JSON.stringify(content);
@@ -26,7 +33,11 @@ class Data {
 
     async dropUser(userData) {
         let login = userData.login;
-        
+
+        if(!this.access.checkPublicKey) return;
+
+        this.userStorage.deleteFile(userData);
+
     }
 }
 

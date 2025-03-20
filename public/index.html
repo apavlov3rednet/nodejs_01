@@ -6,6 +6,8 @@
     <title>Document</title>
   </head>
   <body>
+    <!--  http://localhost:3000/api/latest/users/  -->
+
     <form action="http://localhost:3000/api/v1/users/" method="post">
       <label for="login"> login: <input type="text" name="login" /> </label>
 
@@ -32,23 +34,34 @@
     <form action="http://localhost:3000/api/v1/users/">
       <input type="login" />
 
-      <button onclick="drop(this); return false;">Удалить</button>
+      <div onclick="drop(this); return false;">Удалить</div>
       <div id="delete-request"></div>
     </form>
 
     <script>
       async function drop(obButton) {
-        const form = obButton.form;
+        const form = obButton.parentNode;
         const url = form.getAttribute("action");
         const login = form.querySelector("input").value;
         const element = form.querySelector("#delete-request");
         const fullUrl = url + login + "/";
 
-        console.log(fullUrl);
+        if (confirm("Уверен?")) {
+          let res = await fetch(fullUrl, {
+            method: "DELETE",
+            headers: {
+              Auth: "admin1",
+              secret: "123456",
+              publickey: "sdfsdf-gdfhfgh-rwerwerw-bxcb",
+            },
+          }); // .then return response
+        }
 
-        let ret = await fetch(fullUrl, {
-          method: "DELETE",
-        });
+        /* old version
+        fetch(fullUrl, {method: "DELETE"})
+        .then((res,rej) => {console.log(res)})
+        .catch(err=>console.log(err));
+        */
       }
     </script>
   </body>

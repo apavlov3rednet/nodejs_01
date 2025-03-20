@@ -1,5 +1,6 @@
-const fs = require('fs').promises;
-const path = require('path');
+const fs = require('fs').promises; // Файловая система на обещаниях
+const path = require('path'); // Управление директориями сервера
+const { v4: uuidv4 } = require('uuid');; // GUID генерация уникального имени
 const CustomArray = require('./array.js');
 
 class Storage {
@@ -11,6 +12,8 @@ class Storage {
   #content = "";
 
   constructor(dir) {
+    let newName = uuidv4(dir);
+
     if (dir != "") this.#dir = this.#dir + dir + "/"; // src/storage/users/
   }
 
@@ -90,9 +93,9 @@ class Storage {
     }
   }
 
-  async deleteFile(fileName) {
+  deleteFile(fileName) {
     const filePath = this.prepareFilePath(fileName);
-    return await fs.unlink(filePath);
+    return fs.unlink(filePath);
   }
 }
 

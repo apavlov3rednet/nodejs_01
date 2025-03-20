@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); //axios - современный аналог
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const v1UserRouter = require('./v1/routes/userRoutes');
