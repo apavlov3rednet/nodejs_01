@@ -1,57 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <form action="http://localhost:3000/api/v1/users/" method="post">
-        <label for="login">
-            login: <input type="text" name="login">
+      <label for="login"> login: <input type="text" name="login" /> </label>
+
+      <label for="password">
+        password: <input type="text" name="password" />
+      </label>
+
+      <label for="email"> email: <input type="text" name="email" /> </label>
+
+      <div>
+        groups:
+
+        <label for="admin">
+          <input type="checkbox" name="group[]" value="admin" /> admin
         </label>
-
-        <label for="password">
-            password: <input type="text" name="password">
+        <label for="user">
+          <input type="checkbox" name="group[]" value="user" /> user
         </label>
+      </div>
 
-        <label for="email">
-            email: <input type="text" name="email">
-        </label>
-
-        <div>
-            groups:
-
-            <label for="admin">
-                <input type="checkbox" name="group[]" value="admin"> admin
-            </label>
-            <label for="user">
-                <input type="checkbox" name="group[]" value="user"> user
-            </label>
-        </div>
-
-        <input type="submit" name="send">
+      <input type="submit" name="send" />
     </form>
-    <hr>
+    <hr />
     <form action="http://localhost:3000/api/v1/users/">
-        <input type="login">
+      <input type="login" />
 
-        <button onclick="drop(this); return false;">Удалить</button>
-        <div id="delete-request"></div>
+      <button onclick="drop(this); return false;">Удалить</button>
+      <div id="delete-request"></div>
     </form>
 
     <script>
-        function drop(obButton) {
-            const form = obButton.form;
-            const url = form.getAttribute('action');
-            const login = form.querySelector('input').value;
-            const element = form.querySelector('#delete-request');
+      async function drop(obButton) {
+        const form = obButton.form;
+        const url = form.getAttribute("action");
+        const login = form.querySelector("input").value;
+        const element = form.querySelector("#delete-request");
+        const fullUrl = url + login + "/";
 
-            if(login != '') {
-                fetch(url + login + '/', { method: 'DELETE' })
-                    .then(() => element.innerHTML = 'Delete successful');
-            }
-        }
+        console.log(fullUrl);
+
+        let ret = await fetch(fullUrl, {
+          method: "DELETE",
+        });
+      }
     </script>
-</body>
+  </body>
 </html>

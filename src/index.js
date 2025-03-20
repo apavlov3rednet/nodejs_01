@@ -1,12 +1,15 @@
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const v1UserRouter = require('./v1/routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://127.0.0.1:5500', // Разрешить запросы с этого источника
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешить эти методы
+}));
 app.use(express.static('../public'));
 
 //Явно указываем, что в запросе у нас может существовать тело
@@ -19,7 +22,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Method', 'GET, POST, DELETE, PATCH'); // 'GET, POST'
     res.setHeader('Access-Control-Allow-Header', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true); //Разрешить все что указано выше и считать валидным
-    res.setHeader(':', true); //Разрешить все что указано выше и считать валидным 
+    //res.setHeader(':', true); //Разрешить все что указано выше и считать валидным 
     next();
 });
 
