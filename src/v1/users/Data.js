@@ -1,5 +1,6 @@
 const Storage = require('../../services/storage.js');
 const Access = require('../Access.js');
+const Secure = require('../Secure.js');
 
 /**
  * Класс работы с хранилищем пользователя
@@ -23,7 +24,9 @@ class Data {
 
     async setUser(userData) {
         let nameFile = userData.login;
-        if(!!await this.userStorage.findFile(nameFile)) {
+        let issetFile = await this.userStorage.findFile(nameFile);
+
+        if(issetFile) {
             return await this.userStorage.updateFile(nameFile, userData);
         }
         else {

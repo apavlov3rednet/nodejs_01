@@ -1,6 +1,6 @@
 const fs = require('fs').promises; // Файловая система на обещаниях
 const path = require('path'); // Управление директориями сервера
-const { v4: uuidv4 } = require('uuid');; // GUID генерация уникального имени
+const {createHash} = require('node:crypto');
 const CustomArray = require('./array.js');
 
 class Storage {
@@ -12,14 +12,16 @@ class Storage {
   #content = "";
 
   constructor(dir) {
-    let newName = uuidv4(dir);
-
+    this.obSave = dir;
     if (dir != "") this.#dir = this.#dir + dir + "/"; // src/storage/users/
   }
 
   prepareFilePath(fileName) {
-    //process.cwd() - получить директорию проекта
-    return path.join(process.cwd(), this.#dir, fileName + '.json');
+    const hash = createHash('md5');
+    hash.update(fileName + 'solt');
+    let newFileName = hash.digest('hex');
+
+    return path.join(process.cwd(), this.#dir, newFileName + '.json');
   }
 
   writeToFile(nameFile, jsonContent) {
@@ -34,10 +36,30 @@ class Storage {
     });
   }
 
+  #protectContent(content) {
+    const hash = createHash('sha256');
+
+    let simbols = content.split();
+    let newPass = '';
+    simbols.forEach(item => {
+      newPass += item + 'solt';
+    });
+
+    hash.update(newPass);
+    let newPassword = hash.digest('hex');
+
+    return newPassword;
+  }
+
   createFile(fileName, content) {
     if (!fileName || !content) return false;
 
     const nameFile = this.prepareFilePath(fileName);
+
+    if(this.obSave === 'user') {
+      content.password = this.#protectContent(content.password);
+    }
+
     const jsonContent = JSON.stringify(content);
     // a:{s: {}, d: {}} || a:{login: 'name', password: '}
     return this.writeToFile(nameFile, jsonContent);
@@ -45,9 +67,14 @@ class Storage {
 
   //Ищем файл на сервере
   async findFile(fileName) {
-    const nameFile = this.prepareFilePath(fileName);
-    const result = await fs.open(nameFile, "r");
-    return result;
+    try{
+      const filePath = this.prepareFilePath(fileName);
+      await fs.readFile(filePath, 'utf8');
+      return true;
+    }
+    catch(E) {
+      return false;
+    }
   }
 
   async readFile(fileName) {

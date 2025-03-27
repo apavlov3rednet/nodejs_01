@@ -9,7 +9,7 @@ class AccessUser {
         this.#client = client;
         this.#secret = secret;
         this.#key = key;
-        this.accessStorage = new Storage('access');
+        this.accessStorage = new storage('access');
     }
 
     checkPublicKey() {
