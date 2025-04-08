@@ -23,28 +23,8 @@
         <label for="admin">
           <input type="checkbox" name="group[]" value="admin" /> admin
         </label>
-        <label for="user">
-          <input type="checkbox" name="group[]" value="user" /> user
-        </label>
-      </div>
-
-      <input type="submit" name="send" />
-    </form>
-    <hr />
-    <form action="http://localhost:3000/api/v1/group/" method="post">
-      <label for="login"> login: <input type="text" name="login" /> </label>
-
-      <label for="password">
-        password: <input type="text" name="password" />
-      </label>
-
-      <label for="email"> email: <input type="text" name="email" /> </label>
-
-      <div>
-        groups:
-
-        <label for="admin">
-          <input type="checkbox" name="group[]" value="admin" /> admin
+        <label for="manager">
+          <input type="checkbox" name="group[]" value="manager" /> manager
         </label>
         <label for="user">
           <input type="checkbox" name="group[]" value="user" /> user
@@ -59,6 +39,53 @@
 
       <div onclick="drop(this); return false;">Удалить</div>
       <div id="delete-request"></div>
+    </form>
+    <hr />
+    <form action="http://localhost:3000/api/v1/groups/" method="post">
+      <label for="login"> name: <input type="text" name="name" /> </label>
+
+      <!-- 
+      crud
+      -->
+
+      <table>
+        <tr>
+          <th></th>
+          <th>user</th>
+          <th>group</th>
+          <th>project</th>
+          <th>task</th>
+        </tr>
+        <tr>
+          <td>Create</td>
+          <td><input name="rule[user][c]" value="1" type="checkbox" /></td>
+          <td><input name="rule[group][c]" value="1" type="checkbox" /></td>
+          <td><input name="rule[project][c]" value="1" type="checkbox" /></td>
+          <td><input name="rule[task][c]" value="1" type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Read</td>
+          <td><input name="rule[user][r]" value="1" type="checkbox" /></td>
+          <td><input name="rule[group][r]" value="1" type="checkbox" /></td>
+          <td><input name="rule[project][r]" value="1" type="checkbox" /></td>
+          <td><input name="rule[task][r]" value="1" type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Update</td>
+          <td><input name="rule[user][u]" value="1" type="checkbox" /></td>
+          <td><input name="rule[group][u]" value="1" type="checkbox" /></td>
+          <td><input name="rule[project][u]" value="1" type="checkbox" /></td>
+          <td><input name="rule[task][u]" value="1" type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Delete</td>
+          <td><input name="rule[user][d]" value="1" type="checkbox" /></td>
+          <td><input name="rule[group][d]" value="1" type="checkbox" /></td>
+          <td><input name="rule[project][d]" value="1" type="checkbox" /></td>
+          <td><input name="rule[task][d]" value="1" type="checkbox" /></td>
+        </tr>
+      </table>
+      <input type="submit" name="send" />
     </form>
 
     <script>

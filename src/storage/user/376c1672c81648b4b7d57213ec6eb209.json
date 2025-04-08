@@ -1,1 +1,7 @@
-{"login":"p3","password":"52f6461223e4a5b18d665bcb20e3bef5b8aa97604315f6e89d2d8bf020d69ce0","email":"asddsfdsf","group":["user"],"send":"Отправить"}
+{
+  "login": "p3",
+  "password": "52f6461223e4a5b18d665bcb20e3bef5b8aa97604315f6e89d2d8bf020d69ce0",
+  "email": "asddsfdsf",
+  "group": ["user"],
+  "send": "Отправить"
+}

@@ -2,6 +2,7 @@ const express = require('express'); //axios - современный анало�
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const v1UserRouter = require('./v1/routes/userRoutes');
+const v1GroupRouter = require('./v1/routes/groupRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,7 +32,7 @@ app.use(express.urlencoded({ extended : true}));
  * use - middleware
  */
 app.use('/api/v1/users', v1UserRouter);
-
+app.use('/api/v1/groups', v1GroupRouter);
 /**
  * 404 ошибка
  */

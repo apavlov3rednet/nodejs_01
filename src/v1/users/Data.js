@@ -19,6 +19,31 @@ class Data {
         if(this.access.checkAdminGroup(content.group)) {
             return JSON.stringify({error: 'You not access to admin group users'});
         }
+
+        const userRole = content.group;
+        let matrixRole = {};
+        const arGroups = new Storage('group');
+        const arObject = ['task', 'user', 'group', 'project'];
+
+        await userRole.forEach(async item => {
+            let role = JSON.parse(await arGroups.readFile(item));
+
+            arObject.forEach(obRoleName => {
+                if(role.rule[obRoleName]) {
+                    matrixRole[obRoleName] = {
+                        c : (role.rule[obRoleName].c === '1') ? 1 : 0,
+                        r : (role.rule[obRoleName].r === '1') ? 1 : 0,
+                        u : (role.rule[obRoleName].u === '1') ? 1 : 0,
+                        d : (role.rule[obRoleName].d === '1') ? 1 : 0
+                    }
+                }
+            });
+        });
+
+        console.log(matrixRole);
+        content.matrixRole = matrixRole;
+
+        console.log(content);
         return JSON.stringify(content);
     }
 
