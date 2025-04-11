@@ -22,10 +22,8 @@ class Data {
         }
 
         const group = new Group();
-
         content.matrixRole = await group.matrix(content.group);
-
-        console.log(content);
+        content.rules = group.prepareRules(content.matrixRole);
         return JSON.stringify(content);
     }
 
