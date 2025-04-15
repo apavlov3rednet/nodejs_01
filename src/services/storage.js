@@ -83,25 +83,33 @@ class Storage {
     return data; 
   }
 
-  getAllFiles() {
+  async getAllFiles() {
     //Читаем содержимое директории
-    const directoryPath = process.cwd() + this.#dir;
+    const directoryPath = path.join(process.cwd(), this.#dir);
     let dataResult = {};
 
-    fs.readdir(directoryPath, (err, files) => {
-      if (err) {
-          return console.error('Не удалось прочитать директорию:', err);
-      }
+    const files = await fs.readdir(directoryPath);
+    let arPromises = [];
 
-      // Перебор каждого файла в директории
-      files.forEach(async (file, index) => {
+    arPromises = files.map(async (file) => {
+      try {
+        let result = {};
         const filePath = path.join(directoryPath, file);
-
-        dataResult[index] = await this.readFile(filePath);
-      });
+        result = JSON.parse(await fs.readFile(filePath, 'utf8'));
+        return result;
+      } catch (error) {
+        throw error;
+      }
     });
 
-    return dataResult;
+    try {
+      const values = await Promise.all(arPromises);
+      console.log(values);
+      return values;
+    } catch (error) {
+      console.error("Error in processing promises:", error);
+      throw error;
+    }
   }
 
   async updateFile(fileName, content) {

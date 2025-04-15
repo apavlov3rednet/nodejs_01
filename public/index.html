@@ -20,19 +20,35 @@
       <div>
         groups:
 
-        <label for="admin">
-          <input type="checkbox" name="group[]" value="admin" /> admin
-        </label>
-        <label for="manager">
-          <input type="checkbox" name="group[]" value="manager" /> manager
-        </label>
-        <label for="user">
-          <input type="checkbox" name="group[]" value="user" /> user
-        </label>
+        <div id="userGroups">
+          <label for="admin">
+            <input type="checkbox" name="group[]" value="admin" /> admin
+          </label>
+        </div>
       </div>
 
       <input type="submit" name="send" />
     </form>
+
+    <script>
+      fetch('http://localhost:3000/api/v1/groups/', {
+        method: "GET"
+      })
+      .then(res => {
+        let response = res;
+        //
+        console.log(response.json());
+      })
+      .then(data => {
+        console.log(data)
+      });
+      
+    </script>
+
+
+
+
+
     <hr />
     <form action="http://localhost:3000/api/v1/users/">
       <input type="login" />
@@ -85,6 +101,11 @@
           <td><input name="rule[task][d]" value="1" type="checkbox" /></td>
         </tr>
       </table>
+      <input type="submit" name="send" />
+    </form>
+    <hr>
+    <form action="http://localhost:3000/api/v1/projects/" method="post">
+      <label for="name"> Project name: <input type="text" name="name" /> </label>
       <input type="submit" name="send" />
     </form>
 

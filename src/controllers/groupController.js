@@ -18,7 +18,7 @@ const setGroup = async (req,res) => { //request, response
 
 
 const getAllGroups = (req,res) => {
-    let arr = new Storage('user');
+    let arr = new Storage('group');
     //Получить содержимое директории
     return arr.getAllFiles();
 };
