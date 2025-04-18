@@ -30,24 +30,22 @@
       <input type="submit" name="send" />
     </form>
 
-    <script>
-      fetch('http://localhost:3000/api/v1/groups/', {
-        method: "GET"
-      })
-      .then(res => {
-        let response = res;
-        //
-        console.log(response.json());
-      })
-      .then(data => {
-        console.log(data)
-      });
-      
+    <script async>
+      async function fetchGroups() {
+        try {
+          let res = await fetch("http://localhost:3000/api/v1/groups/", {
+            method: "GET",
+          });
+
+          let body = await res.json();
+          //здесь что то делаем с разметкой
+        } catch (error) {
+          console.error("Error fetching groups:", error);
+        }
+      }
+
+      fetchGroups();
     </script>
-
-
-
-
 
     <hr />
     <form action="http://localhost:3000/api/v1/users/">
@@ -103,9 +101,11 @@
       </table>
       <input type="submit" name="send" />
     </form>
-    <hr>
+    <hr />
     <form action="http://localhost:3000/api/v1/projects/" method="post">
-      <label for="name"> Project name: <input type="text" name="name" /> </label>
+      <label for="name">
+        Project name: <input type="text" name="name" />
+      </label>
       <input type="submit" name="send" />
     </form>
 
