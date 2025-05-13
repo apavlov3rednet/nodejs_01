@@ -61,7 +61,6 @@ class Data {
   }
 
   checkAccess(curValue, newValue) {
-    console.log(curValue, newValue);
     if (!curValue && !newValue) {
       return { c: "0", r: "0", u: "0", d: "0" };
     }

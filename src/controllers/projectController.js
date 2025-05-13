@@ -5,15 +5,16 @@ function getVersion(url) {
 }
 
 const setProject = async (req,res) => { //request, response
+    
     const version = getVersion(req.baseUrl);
+    console.log(version);
     const Data = require('../' + version + '/projects/Data.js');
     let data = new Data(req.headers);
     return await data.setProject(req.body);
 }
 
-
 const getAllProjects = (req,res) => {
-    let arr = new Storage('projects');
+    let arr = new Storage('project');
     //Получить содержимое директории
     return arr.getAllFiles();
 };

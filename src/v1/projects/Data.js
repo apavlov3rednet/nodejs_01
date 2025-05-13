@@ -5,7 +5,7 @@ const Storage = require("../../services/storage.js");
  */
 class Data {
   constructor(headers) {
-    this.obStorage = new Storage("projects");
+    this.obStorage = new Storage("project");
   }
 
   async getByFileName(name) {
@@ -14,6 +14,7 @@ class Data {
   }
 
   async setProject(arData) {
+    console.log(arData);
     let nameFile = arData.name;
     let issetFile = await this.obStorage.findFile(nameFile);
 

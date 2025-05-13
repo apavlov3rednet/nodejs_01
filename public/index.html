@@ -38,7 +38,31 @@
           });
 
           let body = await res.json();
+          let obGroups = document.getElementById('userGroups');
+
+          obGroups.innerHTML = '';
           //здесь что то делаем с разметкой
+
+          body.forEach(item => {
+            let name = String(item.name);
+            let label = document.createElement('label');
+            let input = document.createElement('input');
+            let span = document.createElement('span');
+
+            input.setAttribute('type', 'checkbox');
+            input.setAttribute('name', 'group[]');
+            input.setAttribute('value', name);
+            input.setAttribute('id', 'FIELD_' + name.toUpperCase());
+
+            span.innerText = name;
+
+            label.setAttribute('for', 'FIELD_' + name.toUpperCase());
+
+            label.appendChild(input);
+            label.appendChild(span);
+            obGroups.append(label);
+          });
+
         } catch (error) {
           console.error("Error fetching groups:", error);
         }
@@ -106,7 +130,19 @@
       <label for="name">
         Project name: <input type="text" name="name" />
       </label>
-      <input type="submit" name="send" />
+      <label for="description">
+        Description: <textarea name="description"></textarea>
+      </label>
+
+      <!-- Owner - select, Command - multy select, checkboxes, DateCreate-->
+       <input type="datetime-local" name="datecreate">
+
+
+       <select name="owner" id="" multiple size="5">
+        <option value="1">name</option>
+        <option value="2">name2</option>
+       </select>
+      <input type="submit"/>
     </form>
 
     <script>

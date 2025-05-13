@@ -60,6 +60,10 @@ class Storage {
       content.password = this.#protectContent(content.password);
     }
 
+    if(content.send) {
+      delete content.send;
+    }
+
     const jsonContent = JSON.stringify(content);
     // a:{s: {}, d: {}} || a:{login: 'name', password: '}
     return this.writeToFile(nameFile, jsonContent);
@@ -104,7 +108,6 @@ class Storage {
 
     try {
       const values = await Promise.all(arPromises);
-      console.log(values);
       return values;
     } catch (error) {
       console.error("Error in processing promises:", error);
