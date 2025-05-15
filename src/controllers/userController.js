@@ -10,10 +10,10 @@ function getVersion(url) {
  * @param {*} res 
  * @returns 
  */
-const getAllUsers = (req,res) => {
+const getAllUsers = async (req,res) => {
     let arr = new Storage('user');
     //Получить содержимое директории
-    return arr.getAllFiles();
+    return await arr.getAllFiles();
 };
 
 /**

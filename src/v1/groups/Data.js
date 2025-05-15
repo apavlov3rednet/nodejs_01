@@ -6,11 +6,20 @@ const Secure = require("../Secure.js");
  * Класс работы с хранилищем пользователя
  */
 class Data {
+  /**
+   * constructor
+   * @param {object} headers 
+   */
   constructor(headers) {
     this.obStorage = new Storage("group");
     this.arObjects = ["group", "user", "project", "task"];
   }
 
+  /**
+   * Get storage element by file name
+   * @param {string} name 
+   * @returns 
+   */
   async getByFileName(name) {
     let content = JSON.parse(await this.obStorage.readFile(name));
     return JSON.stringify(content);

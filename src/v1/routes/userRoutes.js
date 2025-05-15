@@ -3,9 +3,9 @@ const userController = require('./../../controllers/userController.js');
 const router = express.Router();
 
 //Событие: Получить всех пользователей
-router.route('/').get((req, res) => {
+router.route('/').get(async (req, res) => {
     //вызвать версию и метод 
-    let result = userController.getAllUsers();
+    let result = await userController.getAllUsers();
     res.send(result); //json
 });
 

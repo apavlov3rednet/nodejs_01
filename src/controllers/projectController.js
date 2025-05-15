@@ -15,8 +15,16 @@ const setProject = async (req,res) => { //request, response
 
 const getAllProjects = (req,res) => {
     let arr = new Storage('project');
+    let filter = {};
+    //prepare filter
+    if(req.body && req.body.byUser) {
+        filter.owner = req.body.byUser;
+        filter.command = req.body.byUser;
+    }
+
+
     //Получить содержимое директории
-    return arr.getAllFiles();
+    return arr.getAllFiles(filter);
 };
 
 /**

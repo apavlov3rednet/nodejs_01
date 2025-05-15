@@ -87,7 +87,7 @@ class Storage {
     return data; 
   }
 
-  async getAllFiles() {
+  async getAllFiles(filter = {}) {
     //Читаем содержимое директории
     const directoryPath = path.join(process.cwd(), this.#dir);
     let dataResult = {};
@@ -100,7 +100,27 @@ class Storage {
         let result = {};
         const filePath = path.join(directoryPath, file);
         result = JSON.parse(await fs.readFile(filePath, 'utf8'));
-        return result;
+
+        if(Array.from(filter).length > 0) {
+          for(let key in filter) {
+            let resultValue = result[key];
+            let filterValue = filter[key];
+
+            if(resultValue instanceof Array) {
+              let bResult = resultValue.filter(item => item == filterValue);
+              if(bResult) {
+                return result;
+              }
+            }
+            else {
+              if(resultValue == filterValue) {
+                return result;
+              }
+            }
+          }
+        }
+
+        //return result;
       } catch (error) {
         throw error;
       }

@@ -33,4 +33,11 @@ router.route('/:id/').delete((req, res) => {
     res.send(`<h2>Проект ${req.params.id} успешно удален.</h2>`);
 });
 
+//Событие: Получить по фильтру
+router.route('/:byUser/').get(async (req, res) => {
+    //вызвать версию и метод 
+    let result = await projectController.getAllProjects(req);
+    res.send(result); //json
+});
+
 module.exports = router;

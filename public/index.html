@@ -138,14 +138,41 @@
        <input type="datetime-local" name="datecreate">
 
 
-       <select name="owner" id="" multiple size="5">
-        <option value="1">name</option>
-        <option value="2">name2</option>
+       <select name="owner" id="ownerField">
+       </select>
+
+       <select name="command[]" id="commandField" multiple size="5">
        </select>
       <input type="submit"/>
     </form>
 
     <script>
+      async function getUsers() {
+        try {
+          let res = await fetch("http://localhost:3000/api/v1/users/", {
+            method: "GET",
+          });
+
+          let body = await res.json();
+          let obOwner = document.getElementById('ownerField');
+          let obCommand = document.getElementById('commandField');
+          
+          body.forEach(item => {
+            let element = document.createElement('option');
+            element.value = item.login;
+            element.innerText = item.login;
+
+            obOwner.appendChild(element.cloneNode(true));
+            obCommand.appendChild(element.cloneNode(true));
+          });
+
+        } catch (error) {
+          console.error("Error fetching groups:", error);
+        }
+      }
+
+      getUsers();
+
       async function drop(obButton) {
         const form = obButton.parentNode;
         const url = form.getAttribute("action");
