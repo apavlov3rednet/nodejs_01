@@ -3,9 +3,13 @@ const groupController = require('../../controllers/groupController.js');
 const router = express.Router();
 
 //Событие: Получить все группы
+/**
+ * /{filter}/{count}/{offset}/
+ * /false/100/1/
+ */
 router.route('/').get(async (req, res) => {
     //вызвать версию и метод 
-    let result = await groupController.getAllGroups();
+    let result = await groupController.getAllGroups(req);
     res.send(result); //json
 });
 

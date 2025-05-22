@@ -87,40 +87,61 @@ class Storage {
     return data; 
   }
 
-  async getAllFiles(filter = {}) {
+  async getAllFiles(filter = {}, count = 100, offset = 0) {
     //Читаем содержимое директории
     const directoryPath = path.join(process.cwd(), this.#dir);
     let dataResult = {};
 
     const files = await fs.readdir(directoryPath);
     let arPromises = [];
+    let start = 0;
 
-    arPromises = files.map(async (file) => {
+    arPromises = files.map(async (file, index) => {
+
+      //Ограничение по количеству выборки
+      if(start >= count) {
+        return;
+      }
+
+      //Старт выборки
+      if(index < offset) {
+        return;
+      }
+        
+      start++;
+
       try {
         let result = {};
+        let isset = false;
         const filePath = path.join(directoryPath, file);
         result = JSON.parse(await fs.readFile(filePath, 'utf8'));
 
-        if(Array.from(filter).length > 0) {
+        //filter
+        if(Object.keys(filter).length > 0) {
           for(let key in filter) {
             let resultValue = result[key];
             let filterValue = filter[key];
 
             if(resultValue instanceof Array) {
-              let bResult = resultValue.filter(item => item == filterValue);
-              if(bResult) {
-                return result;
+              let bResult = resultValue.findIndex(item => item == filterValue);
+              if(bResult != -1) {
+                isset = true;
               }
             }
             else {
               if(resultValue == filterValue) {
-                return result;
+                isset = true;
               }
             }
           }
-        }
 
-        //return result;
+          if(isset) {
+            return result;
+          }
+        }
+        else {
+          return result;
+        }
       } catch (error) {
         throw error;
       }
@@ -128,7 +149,12 @@ class Storage {
 
     try {
       const values = await Promise.all(arPromises);
-      return values;
+      let newArr = values.map(item => {
+        if(item) { 
+          return item;
+        }
+      });
+      return newArr;
     } catch (error) {
       console.error("Error in processing promises:", error);
       throw error;

@@ -19,8 +19,19 @@ const setGroup = async (req,res) => { //request, response
 
 const getAllGroups = (req,res) => {
     let arr = new Storage('group');
+
+    let filter = {};
+    let count = 100;
+    let offset = 0;
+    //prepare filter
+
+    if(req.query) {
+        count = req.query.count ? req.query.count : count;
+        offset = req.query.offset ? req.query.offset : offset;
+    }
+    
     //Получить содержимое директории
-    return arr.getAllFiles();
+    return arr.getAllFiles(filter, count, offset);
 };
 
 /**

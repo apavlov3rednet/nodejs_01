@@ -33,36 +33,40 @@
     <script async>
       async function fetchGroups() {
         try {
-          let res = await fetch("http://localhost:3000/api/v1/groups/", {
-            method: "GET",
-          });
+          let res = await fetch(
+            "http://localhost:3000/api/v1/groups/?count=100&offset=1",
+            {
+              method: "GET",
+            }
+          );
 
           let body = await res.json();
-          let obGroups = document.getElementById('userGroups');
+          let obGroups = document.getElementById("userGroups");
 
-          obGroups.innerHTML = '';
+          obGroups.innerHTML = "";
           //здесь что то делаем с разметкой
 
-          body.forEach(item => {
-            let name = String(item.name);
-            let label = document.createElement('label');
-            let input = document.createElement('input');
-            let span = document.createElement('span');
+          body.forEach((item) => {
+            if (item && item.name) {
+              let name = String(item.name);
+              let label = document.createElement("label");
+              let input = document.createElement("input");
+              let span = document.createElement("span");
 
-            input.setAttribute('type', 'checkbox');
-            input.setAttribute('name', 'group[]');
-            input.setAttribute('value', name);
-            input.setAttribute('id', 'FIELD_' + name.toUpperCase());
+              input.setAttribute("type", "checkbox");
+              input.setAttribute("name", "group[]");
+              input.setAttribute("value", name);
+              input.setAttribute("id", "FIELD_" + name.toUpperCase());
 
-            span.innerText = name;
+              span.innerText = name;
 
-            label.setAttribute('for', 'FIELD_' + name.toUpperCase());
+              label.setAttribute("for", "FIELD_" + name.toUpperCase());
 
-            label.appendChild(input);
-            label.appendChild(span);
-            obGroups.append(label);
+              label.appendChild(input);
+              label.appendChild(span);
+              obGroups.append(label);
+            }
           });
-
         } catch (error) {
           console.error("Error fetching groups:", error);
         }
@@ -135,15 +139,12 @@
       </label>
 
       <!-- Owner - select, Command - multy select, checkboxes, DateCreate-->
-       <input type="datetime-local" name="datecreate">
+      <input type="datetime-local" name="datecreate" />
 
+      <select name="owner" id="ownerField"></select>
 
-       <select name="owner" id="ownerField">
-       </select>
-
-       <select name="command[]" id="commandField" multiple size="5">
-       </select>
-      <input type="submit"/>
+      <select name="command[]" id="commandField" multiple size="5"></select>
+      <input type="submit" />
     </form>
 
     <script>
@@ -154,18 +155,17 @@
           });
 
           let body = await res.json();
-          let obOwner = document.getElementById('ownerField');
-          let obCommand = document.getElementById('commandField');
-          
-          body.forEach(item => {
-            let element = document.createElement('option');
+          let obOwner = document.getElementById("ownerField");
+          let obCommand = document.getElementById("commandField");
+
+          body.forEach((item) => {
+            let element = document.createElement("option");
             element.value = item.login;
             element.innerText = item.login;
 
             obOwner.appendChild(element.cloneNode(true));
             obCommand.appendChild(element.cloneNode(true));
           });
-
         } catch (error) {
           console.error("Error fetching groups:", error);
         }

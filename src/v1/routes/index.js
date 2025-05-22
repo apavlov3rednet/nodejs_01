@@ -4,8 +4,6 @@ const v1UserRouter = require('./userRoutes.js');
 const v1GroupRouter = require('./groupRoutes.js');
 const v1ProjectRouter = require('./projectRoutes.js');
 
-console.log(v1ProjectRouter);
-
 const morgan = require('morgan');
 
 const app = express();

@@ -14,7 +14,6 @@ class Data {
   }
 
   async setProject(arData) {
-    console.log(arData);
     let nameFile = arData.name;
     let issetFile = await this.obStorage.findFile(nameFile);
 
