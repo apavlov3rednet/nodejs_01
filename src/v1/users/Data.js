@@ -2,6 +2,8 @@ const Storage = require('../../services/storage.js');
 const Group = require('../groups/Data.js');
 const Access = require('../Access.js');
 const Secure = require('../Secure.js');
+const Model = require('../../models/user.js');
+const MC = require('../../services/model.js')
 
 /**
  * Класс работы с хранилищем пользователя
@@ -30,6 +32,16 @@ class Data {
     async setUser(userData) {
         let nameFile = userData.login;
         let issetFile = await this.userStorage.findFile(nameFile);
+
+        console.log(Model);
+        console.log(userData);
+
+        let mc = new MC();
+        prepareData = mc.checkModel(Model, userData);
+
+        if(preapreData.errors) {
+            return preapreData.errors;
+        }
 
         if(issetFile) {
             return await this.userStorage.updateFile(nameFile, userData);
