@@ -16,17 +16,30 @@ const user = {
         email: {
             type: 'string',
             important: true,
-            validator: '^d*$',
+            validator: "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+        },
+        phone: {
+            type: 'string',
+            important: false,
+            validator: this.validator.phone,
+        },
+        workPhone: {
+            type: 'string',
+            important: false,
+            validator: this.validator.phone,
         },
         group: {
             type: 'list',
             important: true,
             multiply: true,
-            list: '{$ref: Group}'
+            ref: 'group'
         },
     },
     rules: {
         
+    },
+    validator: {
+        phone: '^(\+7|8){1,2}([0-9\ \-\(\)]){10,14}$'
     }
 }
 

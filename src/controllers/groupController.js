@@ -26,8 +26,8 @@ const getAllGroups = (req,res) => {
     //prepare filter
 
     if(req.query) {
-        count = req.query.count ? req.query.count : count;
-        offset = req.query.offset ? req.query.offset : offset;
+        count = req.query?.count || count;
+        offset = req.query?.offset || offset;
     }
     
     //Получить содержимое директории

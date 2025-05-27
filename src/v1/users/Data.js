@@ -33,11 +33,8 @@ class Data {
         let nameFile = userData.login;
         let issetFile = await this.userStorage.findFile(nameFile);
 
-        console.log(Model);
-        console.log(userData);
-
-        let mc = new MC();
-        prepareData = mc.checkModel(Model, userData);
+        let mc = new MC(Model);
+        prepareData = mc.checkModel(userData);
 
         if(preapreData.errors) {
             return preapreData.errors;

@@ -12,6 +12,16 @@ function getVersion(url) {
  */
 const getAllUsers = async (req,res) => {
     let arr = new Storage('user');
+    let filter = {};
+    let count = 100;
+    let offset = 0;
+    //prepare filter
+
+    if(req.query) {
+        count = req.query?.count || count;
+        offset = req.query?.offset || offset;
+    }
+
     //Получить содержимое директории
     return await arr.getAllFiles();
 };

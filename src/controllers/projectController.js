@@ -22,9 +22,17 @@ const getAllProjects = (req,res) => {
         filter.command = req.body.byUser;
     }
 
+    let count = 100;
+    let offset = 0;
+    //prepare filter
+
+    if(req.query) {
+        count = req.query?.count || count;
+        offset = req.query?.offset || offset;
+    }
 
     //Получить содержимое директории
-    return arr.getAllFiles(filter);
+    return arr.getAllFiles(filter, count, offset);
 };
 
 /**
