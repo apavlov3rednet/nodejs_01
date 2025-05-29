@@ -17,6 +17,8 @@
 
       <label for="email"> email: <input type="text" name="email" /> </label>
 
+      <label for="phone"> phone: <input type="tel" name="phone" /> </label>
+
       <div>
         groups:
 
@@ -34,7 +36,7 @@
       async function fetchGroups() {
         try {
           let res = await fetch(
-            "http://localhost:3000/api/v1/groups/?count=100&offset=1",
+            "http://localhost:3000/api/v1/groups/",
             {
               method: "GET",
             }

@@ -1,3 +1,10 @@
+const validator = {
+    phone: "^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$"
+}
+
+/**
+ * 
+ */
 const user = {
     fields: {
         _id: {
@@ -21,12 +28,7 @@ const user = {
         phone: {
             type: 'string',
             important: false,
-            validator: this.validator.phone,
-        },
-        workPhone: {
-            type: 'string',
-            important: false,
-            validator: this.validator.phone,
+            //validator: validator.phone,
         },
         group: {
             type: 'list',
@@ -37,9 +39,6 @@ const user = {
     },
     rules: {
         
-    },
-    validator: {
-        phone: '^(\+7|8){1,2}([0-9\ \-\(\)]){10,14}$'
     }
 }
 

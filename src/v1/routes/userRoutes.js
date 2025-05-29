@@ -5,7 +5,7 @@ const router = express.Router();
 //Событие: Получить всех пользователей
 router.route('/').get(async (req, res) => {
     //вызвать версию и метод 
-    let result = await userController.getAllUsers();
+    let result = await userController.getAllUsers(req);
     res.send(result); //json
 });
 

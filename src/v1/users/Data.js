@@ -3,7 +3,7 @@ const Group = require('../groups/Data.js');
 const Access = require('../Access.js');
 const Secure = require('../Secure.js');
 const Model = require('../../models/user.js');
-const MC = require('../../services/model.js')
+const ModelController = require('../../services/model.js')
 
 /**
  * Класс работы с хранилищем пользователя
@@ -33,18 +33,22 @@ class Data {
         let nameFile = userData.login;
         let issetFile = await this.userStorage.findFile(nameFile);
 
-        let mc = new MC(Model);
-        prepareData = mc.checkModel(userData);
+        let mc = new ModelController(Model);
+        mc.checkModel(userData);
 
-        if(preapreData.errors) {
-            return preapreData.errors;
+        console.log(mc.errors);
+        console.log(mc.prepareFields);
+
+        if(Object.keys(mc.errors).lenght > 0) {
+            console.error(mc.errors);
+            return mc.errors;
         }
 
         if(issetFile) {
-            return await this.userStorage.updateFile(nameFile, userData);
+            return await this.userStorage.updateFile(nameFile, mc.prepareFields);
         }
         else {
-            return this.userStorage.createFile(nameFile, userData);
+            return this.userStorage.createFile(nameFile, mc.prepareFields);
         }
     }
 

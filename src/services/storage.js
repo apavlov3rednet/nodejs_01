@@ -13,6 +13,7 @@ class Storage {
 
   constructor(dir) {
     this.obSave = dir;
+    this.currentName = '';
     if (dir != "") this.#dir = this.#dir + dir + "/"; // src/storage/users/
   }
 
@@ -20,6 +21,7 @@ class Storage {
     const hash = createHash("md5");
     hash.update(fileName + "solt");
     let newFileName = hash.digest("hex");
+    this.currentName = newFileName;
 
     return path.join(process.cwd(), this.#dir, newFileName + ".json");
   }
@@ -38,7 +40,6 @@ class Storage {
 
   #protectContent(content) {
     const hash = createHash("sha256");
-
     let simbols = content.split();
     let newPass = "";
     simbols.forEach((item) => {
@@ -63,6 +64,8 @@ class Storage {
     if (content.send) {
       delete content.send;
     }
+
+    content._id = this.currentName;
 
     const jsonContent = JSON.stringify(content);
     // a:{s: {}, d: {}} || a:{login: 'name', password: '}
