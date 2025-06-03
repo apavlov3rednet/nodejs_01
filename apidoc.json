@@ -1,0 +1,15 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "apiDoc basic example",
+  "title": "Custom apiDoc browser title",
+  "url" : "https://localhost:3000/api/v1",
+  "header": {
+    "title": "My own header title",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "My own footer title",
+    "filename": "footer.md"
+  }
+}

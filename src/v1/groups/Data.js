@@ -44,6 +44,7 @@ class Data {
     this.obStorage.deleteFile(arData);
   }
 
+  
   async matrix(arGroups = []) {
     if (arGroups.length === 0) return false;
 
@@ -69,6 +70,13 @@ class Data {
     }
   }
 
+  /**
+   * Check current access to services
+   * @param {object} curValue 
+   * @param {object} newValue 
+   * @throws {} text
+   * @returns void
+   */
   checkAccess(curValue, newValue) {
     if (!curValue && !newValue) {
       return { c: "0", r: "0", u: "0", d: "0" };
