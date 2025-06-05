@@ -35,6 +35,11 @@ app.use(express.urlencoded({ extended : true}));
 app.use('/api/v1/users', v1UserRouter);
 app.use('/api/v1/groups', v1GroupRouter);
 app.use('/api/v1/projects', v1ProjectRouter);
+app.use('/api/auth', (req, res) => {
+    //Метод для генерации токена
+    //Актуальный ли юзер
+    //есть ли у него права
+});
 /**
  * 404 ошибка
  */

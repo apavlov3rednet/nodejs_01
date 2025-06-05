@@ -5,15 +5,20 @@ class AccessUser {
     #secret = null;
     #key = null;
 
-    constructor(client, secret, key) {
+    constructor(client, auth) {
         this.#client = client;
-        this.#secret = secret;
-        this.#key = key;
+        this.#secret = auth.split(' ')[1];
         this.accessStorage = new storage('access');
     }
 
     checkPublicKey() {
-        if(!this.#key === 'sdfsdf-gdfhfgh-rwerwerw-bxcb')
+        console.log(this.#secret)
+
+        //Получить сначала по this.#client сохраненный ключ
+        //Сравнить полученный ключ с присланным
+        if(this.#secret === '12346')
+            return true;
+        else 
             return false;
     }
 

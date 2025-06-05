@@ -12,7 +12,7 @@ const router = express.Router();
  * @apiSuccess {Object} User additional info.
  */
 router.route('/').get(async (req, res) => {
-    //вызвать версию и метод 
+    //вызвать версию и метод
     let result = await userController.getAllUsers(req);
     res.send(result); //json
 });

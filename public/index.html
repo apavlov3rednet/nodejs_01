@@ -35,10 +35,49 @@
     <script async>
       async function fetchGroups() {
         try {
+          /*
+          let resOAuth2 = await fetch( 
+            'http://localhost:3000/api/auth/',
+            {
+              method: 'POST',
+              data: {
+                login: 'dsfsdfs',
+                pass: 'sdfdsfsdf'
+              }
+          });
+          let token = await resOAuth2.json(); 
+          //может вернуться сам токен
+          /*
+        {
+          token: 'sdfdsfsdfsdfsdf',
+          expired: '22\12\2025|23:45:12'
+        }
+          */
+         /*
+         if(!token) {
+
+         }
+          
+          let res2 = await fetch(
+            "http://localhost:3000/api/v1/groups/",
+            {
+              method: "GET",
+              headers: {
+                Authorization: 'Bearer <token>',
+              }
+            }
+          );
+        */
+
+
           let res = await fetch(
             "http://localhost:3000/api/v1/groups/",
             {
               method: "GET",
+              headers: {
+                Authorization: 'X-API-key 12346',
+                accept: '/api',
+              }
             }
           );
 

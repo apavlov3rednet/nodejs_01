@@ -1,6 +1,7 @@
 const express = require('express');
 const groupController = require('../../controllers/groupController.js');
 const router = express.Router();
+const Access = require('./../Access.js');
 
 //Событие: Получить все группы
 /**
@@ -9,8 +10,14 @@ const router = express.Router();
  */
 router.route('/').get(async (req, res) => {
     //вызвать версию и метод 
-    let result = await groupController.getAllGroups(req);
-    res.send(result); //json
+    let headers = req.headers;
+    const access = new Access(headers.origin, headers.authorization);
+    if(!access.checkPublicKey())
+        res.send('<p>Неверный ключ авторизации</p>')
+    else {
+        let result = await groupController.getAllGroups(req);
+        res.send(result); //json
+    }
 });
 
 //Событие: Создает пользователя
